@@ -1,0 +1,30 @@
+cls 
+set /p text=Encrypted text to decrypt:  
+set chars=0123456789abcdefghijklmnopqrstuvwxyz 
+for /l %%N in (10 1 36) do ( 
+for /f %%C in ("!chars:~%%N,1!") do ( 
+set /a MATH=%%N*%code1%+%code2%*%code3% 
+for /f %%F in ("!MATH!") do (
+set "text=!text:-%%F=%%C!"
+) 
+) 
+) 
+cls 
+echo Text decrypted 
+ping localhost -n 3 >nul
+goto SAVE-TEXT
+
+:SAVE-TEXT
+cls
+echo We will create a file named "Decrypted text.txt" on your desktop to save the decrypted text and kill the decryptor....
+ping localhost -n 6 >nul
+echo !text! > "C:\Users\%USERNAME%\Desktop\Decrypted text.txt"
+cls
+echo Text saved
+ping localhost -n 2 >nul
+cls
+echo Killing the program...
+ping localhost -n 4 >nul
+del "%~f0"
+exit
+
